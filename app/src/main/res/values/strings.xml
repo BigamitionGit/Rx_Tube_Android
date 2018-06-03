@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Rx_Tube</string>
+
+    <string name="list_no_items">No searched items</string>
+    <string name="list_no_items_icon_description">Youtube Logo</string>
+    <string name="subscribe_button_title">Subscribe</string>
+
+
+    <!-- Image ContentDescription. -->
+    <string name="image_content_description_thumbnail">Thumbnail</string>
+    <string name="image_content_description_channel">Channel</string>
+    <string name="image_content_description_no_item">No Item</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Home-->
+    <string name="home_title">Home</string>
+
+
+    <!-- Search-->
+    <string name="search_title">Search</string>
+    <string name="title_activity_channel_detail">ChannelDetailActivity</string>
+
+</resources>

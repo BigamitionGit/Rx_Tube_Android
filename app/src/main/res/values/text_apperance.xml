@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Platform" />
+    <style name="Platform.TextStyle" />
+    <style name="Platform.TextStyle.App" />
+    <style name="Platform.TextStyle.App.Title"/>
+    <style name="Platform.TextStyle.App.Subhead"/>
+    <style name="Platform.TextStyle.App.Headline"/>
+    <style name="Platform.TextStyle.App.Body2"/>
+    <style name="Platform.TextStyle.App.Body1"/>
+    <style name="Platform.TextStyle.App.Caption"/>
+
+    <style name="TextStyle" parent="Platform.TextStyle"/>
+
+    <style name="TextStyle.App" parent="Platform.TextStyle.App"/>
+
+
+
+
+</resources>
