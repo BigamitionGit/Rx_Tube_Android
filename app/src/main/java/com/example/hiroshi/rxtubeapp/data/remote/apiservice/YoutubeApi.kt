@@ -1,40 +1,23 @@
 package com.example.hiroshi.rxtubeapp.data.remote.apiservice
 
 import com.example.hiroshi.rxtubeapp.extensions.beginWithLowerCase
+import java.net.URL
 
 /**
  * Created on 2018/03/12.
  */
 sealed class YoutubeApi {
-}
+    data class Search(val parameter: YoutubeApiParameter<
+            YoutubeApiParameter.Require.Search,
+            YoutubeApiParameter.Filter.Search,
+            YoutubeApiParameter.Option.Search>): YoutubeApi()
 
-data class YoutubeSearchRequire(val parameter: String = "part", val properties: Set<Property>) {
-    enum class Property {
-        snippet,
-        id
+
+    companion object {
+        val baseURL: String = "https://www.googleapis.com"
     }
-}
 
-interface ParameterType {
-    val parameter: String
-        get() {
-            return this.toString().beginWithLowerCase()
-        }
-}
-
-sealed class YoutubeSearchFilter {
-    data class ForContentOwner(val forContentOwner: Boolean): YoutubeSearchFilter(), ParameterType
-    data class ForMine(val forMine: Boolean): YoutubeSearchFilter(), ParameterType
-    data class RelatedToVideoId(val id: String): YoutubeSearchFilter(), ParameterType
-
-    val property: Any
-        get() {
-            return when (this) {
-                is ForContentOwner -> this.forContentOwner
-                is ForMine -> this.forMine
-                is RelatedToVideoId -> this.id
-            }
-        }
 
 
 }
+

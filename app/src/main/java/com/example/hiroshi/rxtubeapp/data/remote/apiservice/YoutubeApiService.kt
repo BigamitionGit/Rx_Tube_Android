@@ -15,9 +15,5 @@ import java.util.*
 interface YoutubeApiService {
 
     @GET("/youtube/v3/search")
-    fun itemSearch(@Query("part") part: String,
-                   @QueryMap i: Map<String, Int>,
-                   @QueryMap b: Map<String, Boolean>,
-                   @QueryMap s: Map<String, String>,
-                   @QueryMap d: Map<String, Date>): Single<SearchItems>
+    fun search(@QueryMap parameter: Map<String, Any>): Single<SearchItems>
 }

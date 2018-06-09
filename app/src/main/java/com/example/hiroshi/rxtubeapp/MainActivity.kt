@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupBottomNavigation(savedInstanceState)
     }
 
     private fun setupBottomNavigation(savedInstanceState: Bundle?) {
-        setBottomNavigationBehavior()
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener({ item ->
             val navigationItem = BottomNavigationItem
@@ -38,9 +38,18 @@ class MainActivity : AppCompatActivity() {
             navigationItem.navigate(navigationController)
             true
         })
-    }
 
-    private fun setBottomNavigationBehavior() {
+        if (savedInstanceState == null) {
+            binding.bottomNavigation.selectedItemId = R.id.navigation_home
+        }
+
+        binding.bottomNavigation.setOnNavigationItemReselectedListener { item ->
+            val navigationItem = BottomNavigationItem.forId(item.itemId)
+            val fragment = supportFragmentManager.findFragmentByTag(navigationItem.name)
+            if (fragment is BottomNavigationItem.OnReselectedListener) {
+                fragment.onReselected()
+            }
+        }
 
     }
 
@@ -56,6 +65,11 @@ class MainActivity : AppCompatActivity() {
                 getString(navigationItem.titleRes!!)
             }
         }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setupToolbar(BottomNavigationItem.forId(binding.bottomNavigation.selectedItemId))
     }
 
     enum class BottomNavigationItem(@MenuRes val menuId: Int,
