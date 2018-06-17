@@ -13,7 +13,7 @@ interface ConvertibleToRealmModel<out T: RealmModel> {
 }
 
 
-interface ConvertibleFromRealmModel<out T>: RealmModel {
+interface ConvertibleRealmModel<out T>: RealmModel {
     fun toModel():T
 }
 

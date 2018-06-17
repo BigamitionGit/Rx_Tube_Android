@@ -3,14 +3,6 @@ package com.example.hiroshi.rxtubeapp.data.remote.apiservice
 import com.example.hiroshi.rxtubeapp.extensions.beginWithLowerCase
 import java.util.*
 
-
-interface ParameterType {
-    val parameter: String
-        get() {
-            return this.toString().beginWithLowerCase()
-        }
-}
-
 class YoutubeApiParameter<
         R: YoutubeApiParameter.Require,
         F: YoutubeApiParameter.Filter,
@@ -53,7 +45,8 @@ class YoutubeApiParameter<
         }
     }
 
-    sealed class Option {
+    interface Option {
+        val parameter: Map<String, Any>
 
         enum class RegionCode(val value: String, val parameter: String) {
             JP("JP", "regionCode"),
@@ -69,7 +62,7 @@ class YoutubeApiParameter<
             RU("RU", "regionCode")
         }
 
-        sealed class Search: Option() {
+        sealed class Search: Option {
             data class ChannelId(val id: String): Search()
             data class EventType(val event: Event): Search()
             data class MaxResults(val max: Int): Search()
@@ -84,6 +77,25 @@ class YoutubeApiParameter<
             data class VideoCategoryId(val id: String): Search()
             data class VideoDefinition(val definition: Definition): Search()
             data class VideoDuration(val duration: Duration): Search()
+
+            override val parameter: Map<String, Any> by lazy {
+                when (this) {
+                    is ChannelId -> mapOf("channelId" to this.id)
+                    is EventType -> mapOf("eventType" to this.event)
+                    is MaxResults -> mapOf("maxResults" to this.max)
+                    is Order -> mapOf("order" to this.order)
+                    is PublishedAfter -> mapOf("publishedAfter" to this.time)
+                    is PublishedBefore -> mapOf("publishedBefore" to this.time)
+                    is Datetime -> mapOf("datetime" to this.time)
+                    is Q -> mapOf("q" to this.keyword)
+                    is RegionCode -> mapOf("regionCode" to this.code)
+                    is Type -> mapOf("type" to this.type)
+                    is VideoCaption -> mapOf("videoCaption" to this.caption)
+                    is VideoCategoryId -> mapOf("videoCategoryId" to this.id)
+                    is VideoDefinition -> mapOf("videoDefinition" to this.definition)
+                    is VideoDuration -> mapOf("videoDuration" to this.duration)
+                }
+            }
 
             override fun equals(other: Any?): Boolean {
                 return when (this) {

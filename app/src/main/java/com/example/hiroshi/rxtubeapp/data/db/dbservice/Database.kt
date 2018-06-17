@@ -1,7 +1,7 @@
 package com.example.hiroshi.rxtubeapp.data.db.dbservice
 
 import android.content.Context
-import com.example.hiroshi.rxtubeapp.data.db.model.ConvertibleFromRealmModel
+import com.example.hiroshi.rxtubeapp.data.db.model.ConvertibleRealmModel
 import com.example.hiroshi.rxtubeapp.data.db.model.ConvertibleToRealmModel
 import com.example.hiroshi.rxtubeapp.data.db.model.RealmModelPrimaryKey
 import io.reactivex.Completable
@@ -26,7 +26,7 @@ class Database {
         Realm.setDefaultConfiguration(realmConfig)
     }
 
-    inline fun <reified T: ConvertibleFromRealmModel<U>, U>fetch():Maybe<U> {
+    inline fun <reified T: ConvertibleRealmModel<U>, U>fetch():Maybe<U> {
 
         return Maybe.create { emitter ->
             var realm: Realm? = null
@@ -51,7 +51,7 @@ class Database {
         }
     }
 
-    inline fun <reified T: ConvertibleFromRealmModel<U>, U>fetchByPrimaryKey(primaryKey: RealmModelPrimaryKey):Maybe<U> {
+    inline fun <reified T: ConvertibleRealmModel<U>, U>fetchByPrimaryKey(primaryKey: RealmModelPrimaryKey):Maybe<U> {
 
         return Maybe.create { emitter ->
             var realm: Realm? = null
@@ -77,7 +77,7 @@ class Database {
         }
     }
 
-    inline fun <reified T: ConvertibleFromRealmModel<U>, U>fetchAll(): Observable<U> {
+    inline fun <reified T: ConvertibleRealmModel<U>, U>fetchAll(): Observable<U> {
         return Observable.create { emitter ->
             var realm: Realm? = null
             try {
@@ -118,7 +118,7 @@ class Database {
         }
     }
 
-    inline fun <reified T: ConvertibleFromRealmModel<U>, U>deleteAll(): Completable {
+    inline fun <reified T: ConvertibleRealmModel<U>, U>deleteAll(): Completable {
         return Completable.create { emitter ->
             var realm: Realm? = null
             try {
@@ -138,7 +138,7 @@ class Database {
         }
     }
 
-    inline fun <reified T: ConvertibleFromRealmModel<U>, U>deleteByPrimaryKey(primaryKey: RealmModelPrimaryKey):Completable {
+    inline fun <reified T: ConvertibleRealmModel<U>, U>deleteByPrimaryKey(primaryKey: RealmModelPrimaryKey):Completable {
 
         return Completable.create { emitter ->
             var realm: Realm? = null

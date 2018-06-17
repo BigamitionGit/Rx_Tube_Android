@@ -11,7 +11,7 @@ import io.realm.annotations.RealmClass
 open class YoutubeSearchConditionRealmModel(
         @PrimaryKey open val userId: String,
         open var searchQuery: String
-): ConvertibleFromRealmModel<YoutubeSearchCondition> {
+): ConvertibleRealmModel<YoutubeSearchCondition> {
 
     override fun toModel(): YoutubeSearchCondition {
         return YoutubeSearchCondition(userId, searchQuery)
