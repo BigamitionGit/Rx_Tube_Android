@@ -12,7 +12,6 @@ sealed class YoutubeApi {
             YoutubeApiParameter.Filter.Search,
             YoutubeApiParameter.Option.Search>): YoutubeApi()
 
-
     val parameters: Map<String, Any> by lazy {
         when (this) {
             is Search -> {
@@ -20,10 +19,11 @@ sealed class YoutubeApi {
                         .map { it.parameter }
                         .reduce { result, element -> result.plus(element) }
                         .plus(this.youtubeApi.require.parameter)
-                        .plus(this.youtubeApi.filter.parameter)
+                        .plus(if (this.youtubeApi.filter != null) this.youtubeApi.filter.parameter else mapOf())
             }
         }
     }
+
 
     companion object {
         val baseURL: String = "https://www.googleapis.com"

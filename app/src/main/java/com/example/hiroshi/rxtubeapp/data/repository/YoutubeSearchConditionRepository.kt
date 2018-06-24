@@ -1,9 +1,7 @@
 package com.example.hiroshi.rxtubeapp.data.repository
 
 import com.example.hiroshi.rxtubeapp.data.db.dbservice.Database
-import com.example.hiroshi.rxtubeapp.data.db.model.RealmModelPrimaryKey
-import com.example.hiroshi.rxtubeapp.data.db.model.YoutubeSearchCondition
-import com.example.hiroshi.rxtubeapp.data.db.model.YoutubeSearchConditionRealmModel
+import com.example.hiroshi.rxtubeapp.data.db.model.*
 import com.example.hiroshi.rxtubeapp.data.network.NetworkInteractor
 import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiService
 import com.example.hiroshi.rxtubeapp.data.remote.model.SearchItems
@@ -19,36 +17,49 @@ import io.reactivex.schedulers.Schedulers
  */
 
 interface YoutubeSearchConditionRepository {
-    fun fetchSearchCondition(primaryKey: RealmModelPrimaryKey): Maybe<YoutubeSearchCondition>
-
-    fun fetchAllSearchCondition(): Observable<YoutubeSearchCondition>
+    fun fetchSearchConditionHistory(): Maybe<YoutubeSearchConditionHistory>
 
     fun storeSearchCondition(model: YoutubeSearchCondition): Completable
 
-    fun deleteSearchCondition(primaryKey: RealmModelPrimaryKey): Completable
+    fun deleteSearchConditionHistory(): Completable
 
-    fun deleteAllSearchCondition(): Completable
+    fun deleteAllSearchConditionHistory(): Completable
 }
 
 class YoutubeSearchConditionRepositoryImpl(private val database: Database):YoutubeSearchConditionRepository {
 
-    override fun fetchSearchCondition(primaryKey: RealmModelPrimaryKey): Maybe<YoutubeSearchCondition> {
-        return database.fetchByPrimaryKey<YoutubeSearchConditionRealmModel, YoutubeSearchCondition>(primaryKey)
-    }
-
-    override fun fetchAllSearchCondition(): Observable<YoutubeSearchCondition> {
-        return database.fetchAll<YoutubeSearchConditionRealmModel, YoutubeSearchCondition>()
+    override fun fetchSearchConditionHistory(): Maybe<YoutubeSearchConditionHistory> {
+        // Todo: userIdの取得
+        val userId = ""
+        val primaryKey = YoutubeSearchConditionHistory(userId, mutableListOf()).primaryKey()
+        return database.fetchByPrimaryKey<YoutubeSearchConditionHistoryRealmModel, YoutubeSearchConditionHistory>(primaryKey)
     }
 
     override fun storeSearchCondition(model: YoutubeSearchCondition): Completable {
-        return database.store(model)
+        // Todo: userIdの取得
+        val userId = ""
+        val newSearchConditionHistory = YoutubeSearchConditionHistory(userId, mutableListOf())
+        return database.fetchByPrimaryKey<YoutubeSearchConditionHistoryRealmModel, YoutubeSearchConditionHistory>(newSearchConditionHistory.primaryKey())
+                .map { searchConditionHisotry ->
+                    if (searchConditionHisotry != null) {
+                        searchConditionHisotry.history.add(model)
+                        searchConditionHisotry
+                    } else {
+                        newSearchConditionHistory.history.add(model)
+                        newSearchConditionHistory
+                    }
+                }
+                .flatMapCompletable { database.store(it) }
     }
 
-    override fun deleteSearchCondition(primaryKey: RealmModelPrimaryKey): Completable {
+    override fun deleteSearchConditionHistory(): Completable {
+        // Todo: userIdの取得
+        val userId = ""
+        val primaryKey = YoutubeSearchConditionHistory(userId, mutableListOf()).primaryKey()
         return database.deleteByPrimaryKey<YoutubeSearchConditionRealmModel, YoutubeSearchCondition>(primaryKey)
     }
 
-    override fun deleteAllSearchCondition(): Completable {
-        return database.deleteAll<YoutubeSearchConditionRealmModel, YoutubeSearchCondition>()
+    override fun deleteAllSearchConditionHistory(): Completable {
+        return database.deleteAll<YoutubeSearchConditionHistoryRealmModel, YoutubeSearchConditionHistory>()
     }
 }

@@ -8,7 +8,7 @@ class YoutubeApiParameter<
         F: YoutubeApiParameter.Filter,
         O: YoutubeApiParameter.Option>(
         val require: R,
-        val filter: F,
+        val filter: F?,
         val option: Set<O>) {
 
     interface Require {
@@ -69,7 +69,6 @@ class YoutubeApiParameter<
             data class Order(val order: OrderType): Search()
             data class PublishedAfter(val time: Date): Search()
             data class PublishedBefore(val time: Date): Search()
-            data class Datetime(val time: Date): Search()
             data class Q(val keyword: String): Search()
             data class RegionCode(val code: RegionCode): Search()
             data class Type(val type: SearchType): Search()
@@ -86,7 +85,6 @@ class YoutubeApiParameter<
                     is Order -> mapOf("order" to this.order)
                     is PublishedAfter -> mapOf("publishedAfter" to this.time)
                     is PublishedBefore -> mapOf("publishedBefore" to this.time)
-                    is Datetime -> mapOf("datetime" to this.time)
                     is Q -> mapOf("q" to this.keyword)
                     is RegionCode -> mapOf("regionCode" to this.code)
                     is Type -> mapOf("type" to this.type)
@@ -105,7 +103,6 @@ class YoutubeApiParameter<
                     is Order -> other is Order
                     is PublishedAfter -> other is PublishedAfter
                     is PublishedBefore -> other is PublishedBefore
-                    is Datetime -> other is Datetime
                     is Q -> other is Q
                     is RegionCode -> other is RegionCode
                     is Type -> other is Type
