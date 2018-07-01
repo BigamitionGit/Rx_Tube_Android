@@ -11,6 +11,14 @@ class YoutubeApiParameter<
         val filter: F?,
         val option: Set<O>) {
 
+    val parameters: Map<String, Any> by lazy {
+        this.option
+                .map { it.parameter }
+                .reduce { result, element -> result.plus(element) }
+                .plus(this.require.parameter)
+                .plus(if (this.filter != null) this.filter.parameter else mapOf())
+    }
+
     interface Require {
         val parameter: Map<String, Any>
 

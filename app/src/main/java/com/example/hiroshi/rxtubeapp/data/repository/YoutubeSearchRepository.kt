@@ -2,13 +2,12 @@ package com.example.hiroshi.rxtubeapp.data.repository
 
 
 import com.example.hiroshi.rxtubeapp.data.network.NetworkInteractor
-import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApi
 import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiParameter
 import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiService
+import com.example.hiroshi.rxtubeapp.data.remote.model.SearchItemDetails
+import com.example.hiroshi.rxtubeapp.data.remote.model.SearchItemId
 import com.example.hiroshi.rxtubeapp.data.remote.model.SearchItems
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Created on 2018/03/14.
@@ -21,22 +20,27 @@ private typealias OptionParameter = YoutubeApiParameter.Option.Search
 
 interface YoutubeSearchRepository {
 
-    fun getSearchItems(options: Set<YoutubeApiParameter.Option.Search>): Single<SearchItems>
+    fun fetchSearchItems(options: Set<YoutubeApiParameter.Option.Search>): Single<SearchItems>
+
+    fun fetchSearchItemDetails(ids: Array<Pair<SearchItemId, String>>): Single<SearchItemDetails>
 }
 
 class YoutubeSearchRepositoryImpl(
         private val youtubeApiService: YoutubeApiService,
         private val networkInteractor: NetworkInteractor): YoutubeSearchRepository {
 
-    override fun getSearchItems(options: Set<YoutubeApiParameter.Option.Search>): Single<SearchItems> {
-        val searchParameter:YoutubeApiParameter<RequireParameter, FilterParameter, OptionParameter> = YoutubeApiParameter(
+    override fun fetchSearchItems(options: Set<YoutubeApiParameter.Option.Search>): Single<SearchItems> {
+        val searchParameter = YoutubeApiParameter(
                 YoutubeApiParameter.Require.Search(setOf(RequireProperty.id, RequireProperty.snippet)),
                 null,
                 options)
-        val searchApi = YoutubeApi.Search(searchParameter)
         return networkInteractor.hasNetworkConnectionCompletable()
-                .andThen(youtubeApiService.search(parameter = mapOf()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .andThen(youtubeApiService.search(parameter = searchParameter.parameters))
     }
+
+    override fun fetchSearchItemDetails(ids: Array<Pair<SearchItemId, String>>): Single<SearchItemDetails> {
+
+    }
+
+
 }

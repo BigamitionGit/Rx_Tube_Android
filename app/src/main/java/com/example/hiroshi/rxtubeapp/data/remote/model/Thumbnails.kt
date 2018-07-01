@@ -1,9 +1,12 @@
 package com.example.hiroshi.rxtubeapp.data.remote.model
 
+import se.ansman.kotshi.JsonSerializable
+
 /**
  * Created on 2018/03/12.
  */
 
+@JsonSerializable
 data class Thumbnails(
         val default: Image,
         val medium: Image,
@@ -11,6 +14,8 @@ data class Thumbnails(
         val standard: Image
 
 ) {
+
+    @JsonSerializable
     data class Image(
             val url: String,
             val width: Int,
