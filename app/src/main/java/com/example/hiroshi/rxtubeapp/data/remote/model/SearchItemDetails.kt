@@ -1,6 +1,6 @@
 package com.example.hiroshi.rxtubeapp.data.remote.model
 
-data class SearchItemDetails(val items: Array<ItemType>) {
+data class SearchItemDetails(val items: List<ItemType>) {
 
     sealed class ItemType {
 

@@ -1,15 +1,14 @@
 package com.example.hiroshi.rxtubeapp.data.remote.apiservice
 
-import com.example.hiroshi.rxtubeapp.extensions.beginWithLowerCase
 import java.util.*
 
 class YoutubeApiParameter<
         R: YoutubeApiParameter.Require,
         F: YoutubeApiParameter.Filter,
         O: YoutubeApiParameter.Option>(
-        val require: R,
-        val filter: F?,
-        val option: Set<O>) {
+        private val require: R,
+        private val filter: F?,
+        private val option: Set<O>) {
 
     val parameters: Map<String, Any> by lazy {
         this.option
@@ -32,6 +31,72 @@ class YoutubeApiParameter<
                 mapOf<String, Any>("part" to properties.joinToString(separator = ","))
             }
         }
+
+        data class Videos(private val properties: Set<Property>): Require {
+            enum class Property {
+                snippet,
+                id,
+                contentDetails,
+                player,
+                recordingDetails,
+                statistics,
+                topicDetails
+            }
+
+            override val parameter: Map<String, Any> by lazy {
+                mapOf<String, Any>("part" to properties.joinToString(separator = ","))
+            }
+        }
+
+        data class Channels(private val properties: Set<Property>): Require {
+            enum class Property {
+                snippet,
+                id,
+                contentDetails,
+                statistics,
+                topicDetails
+            }
+
+            override val parameter: Map<String, Any> by lazy {
+                mapOf<String, Any>("part" to properties.joinToString(separator = ",") )
+            }
+        }
+
+        data class Playlists(private val properties: Set<Property>): Require {
+            enum class Property {
+                snippet,
+                id,
+                contentDetails,
+                player
+            }
+
+            override val parameter: Map<String, Any> by lazy {
+                mapOf<String, Any>("part" to properties.joinToString(separator = ","))
+            }
+        }
+
+        data class VideoCategory(private val properties: Set<Property>): Require {
+            enum class Property {
+                snippet,
+                id
+            }
+
+            override val parameter: Map<String, Any> by lazy {
+                mapOf<String, Any>("part" to properties.joinToString(separator = ","))
+            }
+        }
+
+        data class Subscriptions(private val properties: Set<Property>): Require {
+            enum class Property {
+                snippet,
+                id,
+                contentDetails
+            }
+
+            override val parameter: Map<String, Any> by lazy {
+                mapOf<String, Any>("part" to properties.joinToString(separator = ","))
+            }
+        }
     }
 
     interface Filter {
@@ -48,6 +113,55 @@ class YoutubeApiParameter<
                     is ForContentOwner -> mapOf("forContentOwner" to this.forContentOwner)
                     is ForMine -> mapOf("forMine" to this.forMine)
                     is RelatedToVideoId -> mapOf("relatedToVideoId" to this.id)
+                }
+            }
+        }
+
+        sealed class Videos: Filter {
+            class Chart(): Videos()
+            data class Id(val ids: List<String>): Videos()
+            data class MyRating(val rating: Rating): Videos()
+
+            override val parameter: Map<String, Any> by lazy {
+                when (this) {
+                    is Chart -> mapOf("chart" to "mostPopular")
+                    is Id -> mapOf("id" to this.ids.joinToString(separator = ","))
+                    is MyRating -> mapOf("myRating" to this.rating.toString())
+                }
+            }
+
+            enum class Rating {
+                dislike,
+                like
+            }
+        }
+
+        sealed class Channels: Filter {
+            data class CategoryId(val id: String): Channels()
+            data class ForUsername(val name: String): Channels()
+            data class Id(val ids: List<String>): Channels()
+            class Mine(): Channels()
+
+            override val parameter: Map<String, Any> by lazy {
+                when (this) {
+                    is CategoryId -> mapOf("categoryId" to this.id)
+                    is ForUsername -> mapOf("forUsername" to this.name)
+                    is Id -> mapOf("id" to this.ids.joinToString(separator = ","))
+                    is Mine -> mapOf("mine" to true)
+                }
+            }
+        }
+
+        sealed class Playlists: Filter {
+            data class ChannelId(val id: String): Playlists()
+            data class Id(val ids: List<String>): Playlists()
+            class Mine: Playlists()
+
+            override val parameter: Map<String, Any> by lazy {
+                when (this) {
+                    is ChannelId -> mapOf("channelid" to this.id)
+                    is Id -> mapOf("id" to this.ids.joinToString(separator = ","))
+                    is Mine -> mapOf("mine" to true)
                 }
             }
         }
