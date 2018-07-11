@@ -2,8 +2,7 @@ package com.example.hiroshi.rxtubeapp.data.repository
 
 
 import com.example.hiroshi.rxtubeapp.data.network.NetworkInteractor
-import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiParameter
-import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiService
+import com.example.hiroshi.rxtubeapp.data.remote.apiservice.*
 import com.example.hiroshi.rxtubeapp.data.remote.model.*
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
@@ -13,11 +12,6 @@ import io.reactivex.rxkotlin.toSingle
 /**
  * Created on 2018/03/14.
  */
-
-private typealias SearchRequire = YoutubeApiParameter.Require.Search.Property
-private typealias VideosRequire = YoutubeApiParameter.Require.Videos.Property
-private typealias ChannelsRequire = YoutubeApiParameter.Require.Channels.Property
-private typealias PlaylistsRequire = YoutubeApiParameter.Require.Playlists.Property
 
 interface YoutubeSearchRepository {
 
@@ -60,35 +54,37 @@ class YoutubeSearchRepositoryImpl(
                 YoutubeApiParameter.Filter.Playlists.Id(playlistIds),
                 setOf())
 
-        return Single
-                .zip(
-                        youtubeApiService.videos(videoParameter.parameters),
-                        youtubeApiService.channels(channelParameter.parameters),
-                        youtubeApiService.playlists(playlistParameter.parameters),
-                        Function3 { videos: Videos, channels: Channels, playlists: Playlists ->
+        return networkInteractor.hasNetworkConnectionCompletable()
+                .andThen(Single
+                        .zip(
+                                youtubeApiService.videos(videoParameter.parameters),
+                                youtubeApiService.channels(channelParameter.parameters),
+                                youtubeApiService.playlists(playlistParameter.parameters),
+                                Function3 { videos: Videos, channels: Channels, playlists: Playlists ->
 
-                            fun toDetails(id: Pair<SearchItemId, String>):SearchItemDetails.ItemType? {
+                                    fun toDetails(id: Pair<SearchItemId, String>):SearchItemDetailType? {
 
-                                when (id.first.kind) {
-                                    SearchItemId.Kind.video -> {
-                                        val v = videos.items.first { it.id == id.first.id } ?: return null
-                                        val c = channels.items.first { it.id == id.second } ?: return null
-                                        return SearchItemDetails.ItemType.Video(v, c)
-                                    }
-                                    SearchItemId.Kind.channel -> {
-                                        val c = channels.items.first { it.id == id.first.id } ?: return null
-                                        return SearchItemDetails.ItemType.Channel(c)
-                                    }
-                                    SearchItemId.Kind.playlist -> {
-                                        val p = playlists.items.first { it.id == id.first.id } ?: return null
-                                        val c = channels.items.first { it.id == id.second } ?: return null
-                                        return SearchItemDetails.ItemType.Playlist(p, c)
-                                    }
-                                }
-                            }
+                                        when (id.first.kind) {
+                                            SearchItemId.Kind.video -> {
+                                                val v = videos.items.first { it.id == id.first.id } ?: return null
+                                                val c = channels.items.first { it.id == id.second } ?: return null
+                                                return SearchVideoDetail.create(v, c)
+                                            }
+                                            SearchItemId.Kind.channel -> {
+                                                val c = channels.items.first { it.id == id.first.id } ?: return null
+                                                return SearchChannelDetail.create(c)
+                                            }
 
-                            SearchItemDetails(ids.mapNotNull { toDetails(it) })
-                        })
+                                            SearchItemId.Kind.playlist -> {
+                                                val p = playlists.items.first { it.id == id.first.id } ?: return null
+                                                val c = channels.items.first { it.id == id.second } ?: return null
+                                                return SearchPlaylistDetail.create(p, c)
+                                            }
+                                        }
+                                    }
+
+                                    SearchItemDetails(ids.mapNotNull { toDetails(it) })
+                                }))
     }
 
 
