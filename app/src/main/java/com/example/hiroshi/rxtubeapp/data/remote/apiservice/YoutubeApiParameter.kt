@@ -2,6 +2,11 @@ package com.example.hiroshi.rxtubeapp.data.remote.apiservice
 
 import java.util.*
 
+typealias SearchRequire = YoutubeApiParameter.Require.Search.Property
+typealias VideosRequire = YoutubeApiParameter.Require.Videos.Property
+typealias ChannelsRequire = YoutubeApiParameter.Require.Channels.Property
+typealias PlaylistsRequire = YoutubeApiParameter.Require.Playlists.Property
+
 class YoutubeApiParameter<
         R: YoutubeApiParameter.Require,
         F: YoutubeApiParameter.Filter,
