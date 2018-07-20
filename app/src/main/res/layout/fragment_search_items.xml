@@ -4,7 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <data></data>
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsViewModel" />
+    </data>
 
 
     <android.support.constraint.ConstraintLayout
@@ -17,6 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
+            app:adapter="@{viewModel.searchItemAdapter}"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

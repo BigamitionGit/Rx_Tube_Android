@@ -5,8 +5,8 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="channel"
-            type="com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemDataSource.ViewModel.Channel"
+            name="playlist"
+            type="com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemDataSource.ViewModel.Playlist"
             />
     </data>
 
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> viewModel.onClickChannel() }"
+        android:onClick="@{() -> viewModel.onClickPlaylist() }"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
