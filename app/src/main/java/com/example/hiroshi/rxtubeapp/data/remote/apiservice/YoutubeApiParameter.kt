@@ -175,18 +175,25 @@ class YoutubeApiParameter<
     interface Option {
         val parameter: Map<String, Any>
 
-        enum class RegionCode(val value: String, val parameter: String) {
-            JP("JP", "regionCode"),
-            US("US", "regionCode"),
-            CN("CN", "regionCode"),
-            FR("FR", "regionCode"),
-            GB("GB", "regionCode"),
-            IN("IN", "regionCode"),
-            KR("KR", "regionCode"),
-            TW("TW", "regionCode"),
-            CA("CA", "regionCode"),
-            HK("HK", "regionCode"),
-            RU("RU", "regionCode")
+        data class RegionCode(val value: Region) {
+
+            companion object {
+                val parameter = "regionCode"
+            }
+
+            enum class Region(val value: String) {
+                JP("JP"),
+                US("US"),
+                CN("CN"),
+                FR("FR"),
+                GB("GB"),
+                IN("IN"),
+                KR("KR"),
+                TW("TW"),
+                CA("CA"),
+                HK("HK"),
+                RU("RU")
+            }
         }
 
         sealed class Search: Option {
@@ -197,7 +204,7 @@ class YoutubeApiParameter<
             data class PublishedAfter(val time: Date): Search()
             data class PublishedBefore(val time: Date): Search()
             data class Q(val keyword: String): Search()
-            data class RegionCode(val code: RegionCode): Search()
+            data class RegionCode(val code: Option.RegionCode): Search()
             data class Type(val type: SearchType): Search()
             data class VideoCaption(val caption: Caption): Search()
             data class VideoCategoryId(val id: String): Search()

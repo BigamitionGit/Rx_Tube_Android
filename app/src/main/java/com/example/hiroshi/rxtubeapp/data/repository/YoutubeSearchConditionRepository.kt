@@ -29,7 +29,7 @@ interface YoutubeSearchConditionRepository {
 class YoutubeSearchConditionRepositoryImpl(private val database: Database):YoutubeSearchConditionRepository {
 
     override fun fetchSearchConditionHistory(): Maybe<YoutubeSearchConditionHistory> {
-        // Todo: userIdの取得
+        // Todo: userIdの取得(userIdは外から渡す方が良いかも)
         val userId = ""
         val primaryKey = YoutubeSearchConditionHistory(userId, mutableListOf()).primaryKey()
         return database.fetchByPrimaryKey<YoutubeSearchConditionHistoryRealmModel, YoutubeSearchConditionHistory>(primaryKey)

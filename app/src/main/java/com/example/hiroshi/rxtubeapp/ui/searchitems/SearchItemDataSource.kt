@@ -1,5 +1,9 @@
 package com.example.hiroshi.rxtubeapp.ui.searchitems
 
+import com.example.hiroshi.rxtubeapp.data.remote.model.SearchChannelDetail
+import com.example.hiroshi.rxtubeapp.data.remote.model.SearchPlaylistDetail
+import com.example.hiroshi.rxtubeapp.data.remote.model.SearchVideoDetail
+
 /**
  * Created on 2018/03/16.
  */
@@ -25,6 +29,12 @@ class SearchItemDataSource(var viewModels: List<ViewModel>) {
         }
 
         data class Video(val title: String):ViewModel() {
+
+            companion object Factory {
+                fun create(video: SearchVideoDetail): Video {
+                    return Video(video.snippet.title)
+                }
+            }
             override fun getViewType(): ViewType {
                 return ViewType.Video
             }
@@ -34,6 +44,13 @@ class SearchItemDataSource(var viewModels: List<ViewModel>) {
             }
         }
         data class Channel(val title: String):ViewModel() {
+
+            companion object Factory {
+                fun create(channel: SearchChannelDetail): Channel {
+                    return Channel(channel.snippet.title)
+                }
+            }
+
             override fun getViewType(): ViewType {
                 return ViewType.Channel
             }
@@ -43,6 +60,13 @@ class SearchItemDataSource(var viewModels: List<ViewModel>) {
             }
         }
         data class Playlist(val title: String): ViewModel() {
+
+            companion object Factory {
+                fun create(playlist: SearchPlaylistDetail): Playlist {
+                    return Playlist(playlist.snippet.title)
+                }
+            }
+
             override fun getViewType(): ViewType {
                 return ViewType.Playlist
             }
