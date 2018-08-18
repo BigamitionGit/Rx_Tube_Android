@@ -6,7 +6,7 @@
         <import type="android.view.View" />
         <variable
             name="playlist"
-            type="com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemDataSource.ViewModel.Playlist"
+            type="com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemViewModel.Playlist"
             />
     </data>
 
