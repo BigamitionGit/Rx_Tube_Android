@@ -12,6 +12,8 @@ import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchConditionRepos
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchConditionRepositoryImpl
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchRepository
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchRepositoryImpl
+import com.example.hiroshi.rxtubeapp.ui.player.PlayerViewModel
+import com.example.hiroshi.rxtubeapp.ui.searchcondition.SearchConditionViewModel
 import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.android.ext.koin.androidApplication
@@ -24,7 +26,9 @@ import org.koin.dsl.module.applicationContext
 var appModule = applicationContext {
 
     // ViewModel for SearchItemsFragment
-    viewModel { SearchItemsViewModel(get(), get()) }
+    viewModel { SearchItemsViewModel(get(), get(), get()) }
+    viewModel { PlayerViewModel(get()) }
+    viewModel { SearchConditionViewModel(get()) }
 
     bean { androidApplication() as Application }
     bean { androidApplication().baseContext as Context }

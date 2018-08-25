@@ -1,4 +1,4 @@
-package com.example.hiroshi.rxtubeapp.ui.channelDetail
+package com.example.hiroshi.rxtubeapp.ui.channeldetail
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar

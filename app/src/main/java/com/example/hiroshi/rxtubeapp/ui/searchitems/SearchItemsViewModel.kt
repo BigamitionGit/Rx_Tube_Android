@@ -2,6 +2,7 @@ package com.example.hiroshi.rxtubeapp.ui.searchitems
 
 import android.arch.lifecycle.*
 import com.example.hiroshi.rxtubeapp.data.db.model.YoutubeSearchCondition
+import com.example.hiroshi.rxtubeapp.data.network.NetworkInteractor
 import com.example.hiroshi.rxtubeapp.data.remote.model.*
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchConditionRepository
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchDetailRepository
@@ -9,7 +10,9 @@ import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchRepository
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.rxkotlin.toSingle
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 
 class SearchItemsViewModel(
         private val searchRepository: YoutubeSearchRepository,
@@ -42,7 +45,7 @@ class SearchItemsViewModel(
                 .map { i: SearchItems -> i.items.map { Pair(it.id, it.snippet.channelId) } }
                 .flatMap { searchDetailRepository.fetch(it) }
                 .subscribeOn(Schedulers.io())
-                .subscribeBy(onSuccess = { mutableSearchItemDetails.value = it })
+                .subscribeBy(onSuccess = { mutableSearchItemDetails.postValue(it) })
                 .addTo(compositeDisposable)
     }
 
@@ -52,7 +55,7 @@ class SearchItemsViewModel(
                 .map { i: SearchItems -> i.items.map { Pair(it.id, it.snippet.channelId) } }
                 .flatMap { searchDetailRepository.fetch(it) }
                 .subscribeOn(Schedulers.io())
-                .subscribeBy(onSuccess = { mutableSearchItemDetails.value = it })
+                .subscribeBy(onSuccess = { mutableSearchItemDetails.postValue(it) })
                 .addTo(compositeDisposable)
     }
 
@@ -63,7 +66,7 @@ class SearchItemsViewModel(
                 .map { i: SearchItems -> i.items.map { Pair(it.id, it.snippet.channelId) } }
                 .flatMap { searchDetailRepository.fetch(it) }
                 .subscribeOn(Schedulers.io())
-                .subscribeBy(onSuccess = { mutableSearchItemDetails.value = it })
+                .subscribeBy(onSuccess = { mutableSearchItemDetails.postValue(it) })
                 .addTo(compositeDisposable)
     }
 

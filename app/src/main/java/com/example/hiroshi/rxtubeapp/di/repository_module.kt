@@ -1,9 +1,6 @@
 package com.example.hiroshi.rxtubeapp.di
 
-import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchConditionRepository
-import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchConditionRepositoryImpl
-import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchRepository
-import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchRepositoryImpl
+import com.example.hiroshi.rxtubeapp.data.repository.*
 import org.koin.dsl.module.applicationContext
 
 /**
@@ -13,4 +10,7 @@ import org.koin.dsl.module.applicationContext
 val repositoryModule = applicationContext {
     factory { YoutubeSearchRepositoryImpl(get(), get()) as YoutubeSearchRepository }
     factory { YoutubeSearchConditionRepositoryImpl(get()) as YoutubeSearchConditionRepository}
+    factory { YoutubeSearchDetailRepositoryImpl(get(), get()) as YoutubeSearchDetailRepository }
+    factory { YoutubeRelatedVideosRepositoryImpl(get(), get()) as YoutubeRelatedVideosRepository }
+    factory { YoutubeVideosRepositoryImpl(get(), get()) as YoutubeVideosRepository }
 }

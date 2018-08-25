@@ -2,6 +2,7 @@ package com.example.hiroshi.rxtubeapp.di
 
 import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiService
 import com.example.hiroshi.rxtubeapp.data.remote.model.mapper.ApplicationJsonAdapterFactory
+import com.example.hiroshi.rxtubeapp.data.remote.model.mapper.SearchItemIdAdapter
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
