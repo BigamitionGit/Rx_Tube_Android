@@ -175,25 +175,18 @@ class YoutubeApiParameter<
     interface Option {
         val parameter: Map<String, Any>
 
-        data class RegionCode(val value: Region) {
-
-            companion object {
-                val parameter = "regionCode"
-            }
-
-            enum class Region(val value: String) {
-                JP("JP"),
-                US("US"),
-                CN("CN"),
-                FR("FR"),
-                GB("GB"),
-                IN("IN"),
-                KR("KR"),
-                TW("TW"),
-                CA("CA"),
-                HK("HK"),
-                RU("RU")
-            }
+        enum class RegionCode(val value: String) {
+            JP("JP"),
+            US("US"),
+            CN("CN"),
+            FR("FR"),
+            GB("GB"),
+            IN("IN"),
+            KR("KR"),
+            TW("TW"),
+            CA("CA"),
+            HK("HK"),
+            RU("RU")
         }
 
         sealed class Search: Option {
@@ -205,7 +198,7 @@ class YoutubeApiParameter<
             data class PublishedBefore(val time: Date): Search()
             data class Q(val keyword: String): Search()
             data class RegionCode(val code: Option.RegionCode): Search()
-            data class Type(val type: SearchType): Search()
+            data class Type(val types: Set<SearchType>): Search()
             data class VideoCaption(val caption: Caption): Search()
             data class VideoCategoryId(val id: String): Search()
             data class VideoDefinition(val definition: Definition): Search()
@@ -214,18 +207,18 @@ class YoutubeApiParameter<
             override val parameter: Map<String, Any> by lazy {
                 when (this) {
                     is ChannelId -> mapOf("channelId" to this.id)
-                    is EventType -> mapOf("eventType" to this.event)
+                    is EventType -> mapOf("eventType" to this.event.value)
                     is MaxResults -> mapOf("maxResults" to this.max)
-                    is Order -> mapOf("order" to this.order)
+                    is Order -> mapOf("order" to this.order.value)
                     is PublishedAfter -> mapOf("publishedAfter" to this.time)
                     is PublishedBefore -> mapOf("publishedBefore" to this.time)
                     is Q -> mapOf("q" to this.keyword)
-                    is RegionCode -> mapOf("regionCode" to this.code)
-                    is Type -> mapOf("type" to this.type)
-                    is VideoCaption -> mapOf("videoCaption" to this.caption)
+                    is RegionCode -> mapOf("regionCode" to this.code.value)
+                    is Type -> mapOf("type" to this.types.map { it.value }.joinToString(separator = ","))
+                    is VideoCaption -> mapOf("videoCaption" to this.caption.value)
                     is VideoCategoryId -> mapOf("videoCategoryId" to this.id)
-                    is VideoDefinition -> mapOf("videoDefinition" to this.definition)
-                    is VideoDuration -> mapOf("videoDuration" to this.duration)
+                    is VideoDefinition -> mapOf("videoDefinition" to this.definition.value)
+                    is VideoDuration -> mapOf("videoDuration" to this.duration.value)
                 }
             }
 

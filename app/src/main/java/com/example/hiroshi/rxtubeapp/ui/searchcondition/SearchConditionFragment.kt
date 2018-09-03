@@ -45,3 +45,4 @@ class SearchConditionFragment : Fragment() {
                 SearchConditionFragment()
     }
 }
+

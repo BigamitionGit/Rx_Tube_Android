@@ -28,7 +28,7 @@ var appModule = applicationContext {
     // ViewModel for SearchItemsFragment
     viewModel { SearchItemsViewModel(get(), get(), get()) }
     viewModel { PlayerViewModel(get()) }
-    viewModel { SearchConditionViewModel(get()) }
+    viewModel { SearchConditionViewModel(get(), get()) }
 
     bean { androidApplication() as Application }
     bean { androidApplication().baseContext as Context }

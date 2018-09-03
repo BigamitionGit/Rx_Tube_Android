@@ -21,6 +21,11 @@
 
     <!-- Search-->
     <string name="search_title">Search</string>
+    <string name="condition_search_type_video">Video</string>
+    <string name="condition_search_type_channel">Channel</string>
+    <string name="condition_search_type_playlist">Playlist</string>
+
+    <!-- Channel-->
     <string name="title_activity_channel_detail">ChannelDetailActivity</string>
 
 </resources>
