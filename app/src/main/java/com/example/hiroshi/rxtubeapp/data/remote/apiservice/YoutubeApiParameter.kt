@@ -4,6 +4,7 @@ import java.util.*
 
 typealias SearchRequire = YoutubeApiParameter.Require.Search.Property
 typealias VideosRequire = YoutubeApiParameter.Require.Videos.Property
+typealias VideosRating = YoutubeApiParameter.Require.VideosRate.Rating
 typealias ChannelsRequire = YoutubeApiParameter.Require.Channels.Property
 typealias PlaylistsRequire = YoutubeApiParameter.Require.Playlists.Property
 
@@ -50,6 +51,18 @@ class YoutubeApiParameter<
 
             override val parameter: Map<String, Any> by lazy {
                 mapOf<String, Any>("part" to properties.joinToString(separator = ","))
+            }
+        }
+
+        data class VideosRate(private val videoId: String, private val rating: Rating): Require {
+            enum class Rating {
+                dislike,
+                like,
+                none
+            }
+
+            override val parameter: Map<String, Any> by lazy {
+                mapOf<String, Any>("id" to videoId, "rating" to rating)
             }
         }
 

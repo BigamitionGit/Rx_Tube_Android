@@ -1,8 +1,10 @@
 package com.example.hiroshi.rxtubeapp.data.remote.apiservice
 
 import com.example.hiroshi.rxtubeapp.data.remote.model.*
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 import java.util.*
@@ -19,6 +21,9 @@ interface YoutubeApiService {
 
     @GET("/youtube/v3/videos")
     fun videos(@QueryMap parameter: Map<String, Any>): Single<Videos>
+
+    @POST("/youtube/v3/videos/rate")
+    fun videosRate(@QueryMap parameter: Map<String, Any>): Completable
 
     @GET("youtube/v3/channels")
     fun channels(@QueryMap parameter: Map<String, Any>): Single<Channels>

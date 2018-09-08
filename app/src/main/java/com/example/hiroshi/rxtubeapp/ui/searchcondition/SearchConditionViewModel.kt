@@ -1,27 +1,20 @@
 package com.example.hiroshi.rxtubeapp.ui.searchcondition
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.*
 import com.example.hiroshi.rxtubeapp.data.db.model.YoutubeSearchCondition
 import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiParameter
-import com.example.hiroshi.rxtubeapp.data.remote.model.SearchChannelDetail
-import com.example.hiroshi.rxtubeapp.data.remote.model.SearchPlaylistDetail
-import com.example.hiroshi.rxtubeapp.data.remote.model.SearchVideoDetail
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchConditionRepository
-import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemViewModel
-import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsAdapter
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 
 class SearchConditionViewModel(
         private val searchConditionRepository: YoutubeSearchConditionRepository,
         private val searchConditionHistoryTranslator: SearchConditionHistoryTranslator
-): ViewModel() {
+): ViewModel(), LifecycleObserver {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-
-
 
     // Q
     val searchText: MutableLiveData<String> = MutableLiveData()
@@ -35,12 +28,22 @@ class SearchConditionViewModel(
     val isPlaylistTypeSelected = MutableLiveData<Boolean>()
 
     // History
-    val mutableSearchHistory = MutableLiveData<YoutubeSearchCondition>()
-    val searchHistory: LiveData<List<String>> = Transformations.map(mutableSearchHistory, { searchConditionHistoryTranslator.translate(it) })
+    val mutableSearchHistory = MutableLiveData<List<YoutubeSearchCondition>>()
+    val searchHistory: LiveData<List<List<String>>> = Transformations.map(mutableSearchHistory, { searchConditionHistoryTranslator.translate(it) })
 
     // Search
     private val mutableSearch = MutableLiveData<YoutubeSearchCondition>()
     val search: LiveData<YoutubeSearchCondition> = mutableSearch
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onCreate() {
+        searchConditionRepository.fetchSearchConditionHistory()
+                .map { it.history }
+                .subscribeOn(Schedulers.io())
+                .subscribeBy(onSuccess = { mutableSearchHistory.postValue(it) })
+                .addTo(compositeDisposable)
+    }
 
     fun tapVideoType() {
         isVideoTypeSelected.value?.let { isVideoTypeSelected.postValue(!it) }
@@ -52,6 +55,13 @@ class SearchConditionViewModel(
 
     fun tapPlaylistType() {
         isPlaylistTypeSelected.value?.let { isPlaylistTypeSelected.postValue(!it) }
+    }
+
+    fun tapHistory(position: Int) {
+        val history = mutableSearchHistory.value?.let { it[position] }
+        if (history != null) {
+            mutableSearch.postValue(history)
+        }
     }
 
     fun tapSearch() {

@@ -36,6 +36,8 @@ class SearchConditionFragment : Fragment() {
 
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
+
+        lifecycle.addObserver(viewModel)
     }
 
 
@@ -45,4 +47,3 @@ class SearchConditionFragment : Fragment() {
                 SearchConditionFragment()
     }
 }
-

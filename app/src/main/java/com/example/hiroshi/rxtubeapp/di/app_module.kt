@@ -26,8 +26,8 @@ import org.koin.dsl.module.applicationContext
 var appModule = applicationContext {
 
     // ViewModel for SearchItemsFragment
-    viewModel { SearchItemsViewModel(get(), get(), get()) }
-    viewModel { PlayerViewModel(get()) }
+    viewModel { SearchItemsViewModel(get(), get(), get(), get()) }
+    viewModel { PlayerViewModel(get(), get()) }
     viewModel { SearchConditionViewModel(get(), get()) }
 
     bean { androidApplication() as Application }

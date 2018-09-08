@@ -35,6 +35,7 @@ class SearchItemsFragment : Fragment() {
         binding.viewModel = viewModel
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
+        lifecycle.addObserver(viewModel)
     }
 
 

@@ -8,6 +8,7 @@ import com.example.hiroshi.rxtubeapp.data.remote.model.SearchChannelDetail
 import com.example.hiroshi.rxtubeapp.data.remote.model.SearchPlaylistDetail
 import com.example.hiroshi.rxtubeapp.data.remote.model.SearchVideoDetail
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeRelatedVideosRepository
+import com.example.hiroshi.rxtubeapp.data.repository.YoutubeVideosRateRepository
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeVideosRepository
 import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemViewModel
 import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsAdapter
@@ -16,7 +17,9 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
-class PlayerViewModel(private val relatedVideosRepository: YoutubeRelatedVideosRepository): ViewModel() {
+class PlayerViewModel(
+        private val relatedVideosRepository: YoutubeRelatedVideosRepository,
+        private val videosRateRepository: YoutubeVideosRateRepository): ViewModel() {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 

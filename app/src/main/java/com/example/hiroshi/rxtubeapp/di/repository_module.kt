@@ -13,4 +13,5 @@ val repositoryModule = applicationContext {
     factory { YoutubeSearchDetailRepositoryImpl(get(), get()) as YoutubeSearchDetailRepository }
     factory { YoutubeRelatedVideosRepositoryImpl(get(), get()) as YoutubeRelatedVideosRepository }
     factory { YoutubeVideosRepositoryImpl(get(), get()) as YoutubeVideosRepository }
+    factory { YoutubeVideosRateRepositoryImpl(get(), get()) as YoutubeVideosRateRepository }
 }

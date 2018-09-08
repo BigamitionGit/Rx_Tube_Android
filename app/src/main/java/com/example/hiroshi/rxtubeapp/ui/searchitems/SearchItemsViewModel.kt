@@ -17,28 +17,20 @@ import io.reactivex.subjects.PublishSubject
 class SearchItemsViewModel(
         private val searchRepository: YoutubeSearchRepository,
         private  val searchDetailRepository: YoutubeSearchDetailRepository,
-        private val searchConditionRepository: YoutubeSearchConditionRepository
-): ViewModel()  {
+        private val searchConditionRepository: YoutubeSearchConditionRepository,
+        private val searchItemsAdapterTranslator: SearchItemsAdapterTranslator
+): ViewModel(), LifecycleObserver  {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     // Output
     private val mutableSearchItemDetails: MutableLiveData<SearchItemDetails> = MutableLiveData()
-    val searchItemAdapter: LiveData<SearchItemsAdapter> = Transformations.map(mutableSearchItemDetails, {details ->
-        val viewModels = details.items.map { item ->
-            when (item) {
-                is SearchVideoDetail -> SearchItemViewModel.Video.create(item)
-                is SearchChannelDetail -> SearchItemViewModel.Channel.create(item)
-                is SearchPlaylistDetail -> SearchItemViewModel.Playlist.create(item)
-            }
-        }
-        SearchItemsAdapter(viewModels)
-    })
-
+    val searchItemAdapter: LiveData<SearchItemsAdapter> = Transformations.map(mutableSearchItemDetails, { searchItemsAdapterTranslator.translate(it) })
 
     // Input
 
-    fun activityOnCreate() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onCreate() {
 
         searchConditionRepository.fetchSearchConditionHistory()
                 .flatMapSingle { searchRepository.fetch(it.history.first().toYoutubeSearchOptionParameter()) }
