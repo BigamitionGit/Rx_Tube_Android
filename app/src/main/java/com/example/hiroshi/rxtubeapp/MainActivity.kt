@@ -9,13 +9,20 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.annotation.MenuRes
 import android.support.annotation.StringRes
+import android.view.MenuItem
+import android.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.NavAction
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.example.hiroshi.rxtubeapp.data.db.dbservice.Database
 import com.example.hiroshi.rxtubeapp.databinding.ActivityMainBinding
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    val navigationController: NavigationController by inject()
+    private val navController: NavController by lazy { findNavController(this, R.id.nav_host_fragment) }
 
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
@@ -25,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        NavigationUI.setupActionBarWithNavController(this, navController)
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
         setupBottomNavigation(savedInstanceState)
     }
 
@@ -35,7 +44,6 @@ class MainActivity : AppCompatActivity() {
                     .forId(item.itemId)
 
             setupToolbar(navigationItem)
-            navigationItem.navigate(navigationController)
             true
         })
 
@@ -67,20 +75,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        setupToolbar(BottomNavigationItem.forId(binding.bottomNavigation.selectedItemId))
-    }
+    override fun onSupportNavigateUp() = navController.navigateUp()
 
     enum class BottomNavigationItem(@MenuRes val menuId: Int,
                                     @StringRes val titleRes: Int?,
                                     @DrawableRes val imageRes: Int?,
-                                    val isUseToolbarElevation: Boolean,
-                                    val navigate: (NavigationController) -> Unit) {
+                                    val isUseToolbarElevation: Boolean) {
 
-        SEARCH(R.id.navigation_search, R.string.search_title, null, false, {
-            it.navigateToSearch()
-        });
+        SEARCH(R.id.navigation_search, R.string.search_title, null, false);
 
         interface OnReselectedListener {
             fun onReselected()
