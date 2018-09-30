@@ -13,6 +13,7 @@ import com.example.hiroshi.rxtubeapp.databinding.FragmentSearchItemsBinding
 import com.example.hiroshi.rxtubeapp.databinding.ItemSearchChannelBinding
 import com.example.hiroshi.rxtubeapp.databinding.ItemSearchVideoBinding
 import com.example.hiroshi.rxtubeapp.R
+import com.example.hiroshi.rxtubeapp.data.db.model.YoutubeSearchCondition
 import org.koin.android.architecture.ext.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -34,6 +35,13 @@ class SearchItemsFragment : Fragment() {
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+
+        val youtubeSearchCondition = SearchItemsFragmentArgs.fromBundle(arguments).searchCondition as? YoutubeSearchCondition
+        if (youtubeSearchCondition != null) {
+            viewModel.search(youtubeSearchCondition)
+        } else {
+            viewModel.onCreate()
+        }
 
         lifecycle.addObserver(viewModel)
     }

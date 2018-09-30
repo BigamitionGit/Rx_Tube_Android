@@ -1,8 +1,11 @@
 package com.example.hiroshi.rxtubeapp.data.db.model
 
+import android.os.Parcelable
 import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiParameter
+import io.realm.Realm
 import io.realm.RealmList
 import io.realm.annotations.RealmClass
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 /**
@@ -11,18 +14,18 @@ import java.util.*
 
 @RealmClass
 open class YoutubeSearchConditionRealmModel(
-        open var searchQuery: String?,
-        open var channelId: String?,
-        open var event: String?,
-        open var orderType: String?,
-        open var publishedAfter: Date?,
-        open var publishedBefore: Date?,
-        open var regionCode: String?,
-        open var searchTypes: RealmList<String>,
-        open var caption: String?,
-        open var videoCategoryid: String?,
-        open var definition: String?,
-        open var duration: String?
+        open var searchQuery: String? = null,
+        open var channelId: String? = null,
+        open var event: String? = null,
+        open var orderType: String? = null,
+        open var publishedAfter: Date? = null,
+        open var publishedBefore: Date? = null,
+        open var regionCode: String? = null,
+        open var searchTypes: RealmList<String> = RealmList(),
+        open var caption: String? = null,
+        open var videoCategoryid: String? = null,
+        open var definition: String? = null,
+        open var duration: String? = null
 
 
 ): ConvertibleRealmModel<YoutubeSearchCondition> {
@@ -44,6 +47,7 @@ open class YoutubeSearchConditionRealmModel(
     }
 }
 
+@Parcelize
 data class YoutubeSearchCondition(
         val searchQuery: String? = null,
         val channelId: String? = null,
@@ -58,7 +62,7 @@ data class YoutubeSearchCondition(
         val definition: YoutubeApiParameter.Option.Search.Definition? = null,
         val duration: YoutubeApiParameter.Option.Search.Duration? = null
 
-): ConvertibleToRealmModel<YoutubeSearchConditionRealmModel> {
+): ConvertibleToRealmModel<YoutubeSearchConditionRealmModel>, Parcelable {
 
     override fun toRealmModel(): YoutubeSearchConditionRealmModel {
         var types = RealmList<String>()

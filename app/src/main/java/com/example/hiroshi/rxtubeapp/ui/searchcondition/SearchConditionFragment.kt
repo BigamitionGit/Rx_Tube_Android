@@ -1,5 +1,6 @@
 package com.example.hiroshi.rxtubeapp.ui.searchcondition
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.net.Uri
@@ -8,7 +9,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.hiroshi.rxtubeapp.R
 import com.example.hiroshi.rxtubeapp.databinding.FragmentSearchConditionBinding
 
@@ -38,7 +40,13 @@ class SearchConditionFragment : Fragment() {
         binding.viewModel = viewModel
 
         lifecycle.addObserver(viewModel)
+
+        viewModel.search.observe(this, Observer { condition ->
+            navController().navigate(SearchConditionFragmentDirections.showSearchItems().setSearchCondition(condition))
+        })
     }
+
+    fun navController() = findNavController(this)
 
 
 

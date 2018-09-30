@@ -10,8 +10,8 @@ import io.realm.annotations.RealmClass
 
 @RealmClass
 open class YoutubeSearchConditionHistoryRealmModel(
-        @PrimaryKey open val userId: String,
-        open var hisotry: RealmList<YoutubeSearchConditionRealmModel>): ConvertibleRealmModel<YoutubeSearchConditionHistory> {
+        @PrimaryKey open var userId: String = "",
+        open var hisotry: RealmList<YoutubeSearchConditionRealmModel> = RealmList()): ConvertibleRealmModel<YoutubeSearchConditionHistory> {
 
     override fun toModel(): YoutubeSearchConditionHistory {
         val historyModel = hisotry.map { it.toModel() }.toMutableList()
