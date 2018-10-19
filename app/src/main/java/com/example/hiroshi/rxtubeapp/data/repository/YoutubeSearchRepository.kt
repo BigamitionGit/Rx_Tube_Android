@@ -5,9 +5,6 @@ import com.example.hiroshi.rxtubeapp.data.network.NetworkInteractor
 import com.example.hiroshi.rxtubeapp.data.remote.apiservice.*
 import com.example.hiroshi.rxtubeapp.data.remote.model.*
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Function3
-import io.reactivex.rxkotlin.toSingle
 
 /**
  * Created on 2018/03/14.

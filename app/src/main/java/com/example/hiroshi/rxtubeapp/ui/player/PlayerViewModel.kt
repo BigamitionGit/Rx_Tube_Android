@@ -1,17 +1,12 @@
 package com.example.hiroshi.rxtubeapp.ui.player
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.ViewModel
-import com.example.hiroshi.rxtubeapp.data.remote.model.SearchChannelDetail
-import com.example.hiroshi.rxtubeapp.data.remote.model.SearchPlaylistDetail
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.example.hiroshi.rxtubeapp.data.remote.model.SearchVideoDetail
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeRelatedVideosRepository
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeVideosRateRepository
-import com.example.hiroshi.rxtubeapp.data.repository.YoutubeVideosRepository
-import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemViewModel
-import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsAdapter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy

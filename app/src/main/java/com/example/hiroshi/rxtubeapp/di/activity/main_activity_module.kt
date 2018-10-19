@@ -1,13 +1,13 @@
 package com.example.hiroshi.rxtubeapp.di.activity
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hiroshi.rxtubeapp.MainActivity
 import com.example.hiroshi.rxtubeapp.NavigationController
-import org.koin.dsl.module.applicationContext
+import org.koin.dsl.module.module
 
 
-var mainActivityModule = applicationContext {
+var mainActivityModule = module {
 
     factory("main") { NavigationController(get()) as NavigationController }
-    bean { MainActivity() as AppCompatActivity }
+    single { MainActivity() as AppCompatActivity }
 }

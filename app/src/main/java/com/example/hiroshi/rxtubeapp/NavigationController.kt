@@ -1,10 +1,9 @@
 package com.example.hiroshi.rxtubeapp
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsFragment
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class NavigationController(private val activity: AppCompatActivity) {
 

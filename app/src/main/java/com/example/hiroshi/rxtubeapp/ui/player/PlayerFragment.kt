@@ -1,23 +1,19 @@
 package com.example.hiroshi.rxtubeapp.ui.player
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.hiroshi.rxtubeapp.R
 import com.example.hiroshi.rxtubeapp.databinding.FragmentPlayerBinding
-import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsViewModel
-
-import org.koin.android.architecture.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class PlayerFragment : Fragment() {
 
-    private val viewModel by viewModel<PlayerViewModel>()
+    private val viewModel by sharedViewModel<PlayerViewModel>()
     private lateinit var binding: FragmentPlayerBinding
 
 

@@ -1,24 +1,20 @@
 package com.example.hiroshi.rxtubeapp.ui.searchcondition
 
-import android.arch.lifecycle.Observer
-import android.content.Context
-import android.databinding.DataBindingUtil
-import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.hiroshi.rxtubeapp.R
 import com.example.hiroshi.rxtubeapp.databinding.FragmentSearchConditionBinding
-
-import org.koin.android.architecture.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SearchConditionFragment : Fragment() {
 
-    private val viewModel by viewModel<SearchConditionViewModel>()
+    private val viewModel by sharedViewModel<SearchConditionViewModel>()
     private lateinit var binding: FragmentSearchConditionBinding
 
 

@@ -1,27 +1,21 @@
 package com.example.hiroshi.rxtubeapp.ui.searchitems
 
-import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hiroshi.rxtubeapp.databinding.FragmentSearchItemsBinding
-import com.example.hiroshi.rxtubeapp.databinding.ItemSearchChannelBinding
-import com.example.hiroshi.rxtubeapp.databinding.ItemSearchVideoBinding
 import com.example.hiroshi.rxtubeapp.R
 import com.example.hiroshi.rxtubeapp.data.db.model.YoutubeSearchCondition
-import org.koin.android.architecture.ext.viewModel
-import java.util.*
-import kotlin.collections.ArrayList
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SearchItemsFragment : Fragment() {
 
 
-    private val viewModel by viewModel<SearchItemsViewModel>()
+    private val viewModel by sharedViewModel<SearchItemsViewModel>()
     private lateinit var binding: FragmentSearchItemsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =

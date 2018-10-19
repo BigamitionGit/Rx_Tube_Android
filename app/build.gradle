@@ -17,7 +17,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     sourceSets {
@@ -40,6 +40,10 @@ android {
             buildConfigField("String", "CONTENTFUL_PREVIEW_TOKEN", "\"e8fc39d9661c7468d0285a7ff949f7a23539dd2e686fcb7bd84dc01b392d698b\"")
             buildConfigField("String", "CONTENTFUL_SPACE_ID", "\"qz0n5cdakyl9\"")
         }
+    }
+
+    androidExtensions {
+        experimental = true
     }
 
     compileOptions {

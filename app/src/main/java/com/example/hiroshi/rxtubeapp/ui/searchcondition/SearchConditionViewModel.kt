@@ -1,6 +1,6 @@
 package com.example.hiroshi.rxtubeapp.ui.searchcondition
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 import com.example.hiroshi.rxtubeapp.data.db.model.YoutubeSearchCondition
 import com.example.hiroshi.rxtubeapp.data.remote.apiservice.YoutubeApiParameter
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeSearchConditionRepository

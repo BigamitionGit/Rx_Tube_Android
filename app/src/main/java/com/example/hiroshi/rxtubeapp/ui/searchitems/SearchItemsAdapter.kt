@@ -1,17 +1,15 @@
 package com.example.hiroshi.rxtubeapp.ui.searchitems
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hiroshi.rxtubeapp.databinding.ItemSearchChannelBinding
 import com.example.hiroshi.rxtubeapp.databinding.ItemSearchPlaylistBinding
 import com.example.hiroshi.rxtubeapp.databinding.ItemSearchVideoBinding
 
 class SearchItemsAdapter(var viewModels: List<SearchItemViewModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
-
-        parent ?: return null
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val viewModelType = SearchItemViewModel.ViewType.from(viewType)
         when (viewModelType) {
             SearchItemViewModel.ViewType.Video -> {
@@ -31,7 +29,7 @@ class SearchItemsAdapter(var viewModels: List<SearchItemViewModel>) : RecyclerVi
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val viewModel = viewModels[position]
 
