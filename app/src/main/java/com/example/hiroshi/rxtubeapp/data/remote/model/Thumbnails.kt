@@ -1,5 +1,7 @@
 package com.example.hiroshi.rxtubeapp.data.remote.model
 
+import com.squareup.moshi.Json
+import se.ansman.kotshi.GetterName
 import se.ansman.kotshi.JsonSerializable
 
 /**
@@ -8,6 +10,8 @@ import se.ansman.kotshi.JsonSerializable
 
 @JsonSerializable
 data class Thumbnails(
+        @GetterName("getDefault")
+        @Json(name = "default")
         val default: Image,
         val medium: Image,
         val high: Image,

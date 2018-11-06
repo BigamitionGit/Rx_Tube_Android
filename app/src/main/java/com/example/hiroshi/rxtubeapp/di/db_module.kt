@@ -9,5 +9,5 @@ import org.koin.dsl.module.module
 
 
 var dbModule = module {
-    single { Database() as Database }
+    single { Database() }
 }

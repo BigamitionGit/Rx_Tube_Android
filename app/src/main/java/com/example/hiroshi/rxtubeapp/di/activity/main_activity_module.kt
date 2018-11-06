@@ -8,6 +8,6 @@ import org.koin.dsl.module.module
 
 var mainActivityModule = module {
 
-    factory("main") { NavigationController(get()) as NavigationController }
+    factory("main") { NavigationController(get()) }
     single { MainActivity() as AppCompatActivity }
 }

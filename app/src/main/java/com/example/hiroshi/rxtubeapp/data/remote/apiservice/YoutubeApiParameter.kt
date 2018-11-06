@@ -29,8 +29,8 @@ class YoutubeApiParameter<
 
         data class Search(private val properties: Set<Property>): Require {
             enum class Property {
-                snippet,
-                id
+                SNIPPET,
+                ID
             }
 
             override val parameter: Map<String, Any> by lazy {
@@ -40,13 +40,13 @@ class YoutubeApiParameter<
 
         data class Videos(private val properties: Set<Property>): Require {
             enum class Property {
-                snippet,
-                id,
-                contentDetails,
-                player,
-                recordingDetails,
-                statistics,
-                topicDetails
+                SNIPPET,
+                ID,
+                CONTENTDETAILS,
+                PLAYER,
+                RECORDINGDETAILS,
+                STATISTICS,
+                TOPICDETAILS
             }
 
             override val parameter: Map<String, Any> by lazy {
@@ -56,23 +56,23 @@ class YoutubeApiParameter<
 
         data class VideosRate(private val videoId: String, private val rating: Rating): Require {
             enum class Rating {
-                dislike,
-                like,
-                none
+                DISLIKE,
+                LIKE,
+                NONE
             }
 
             override val parameter: Map<String, Any> by lazy {
-                mapOf<String, Any>("id" to videoId, "rating" to rating)
+                mapOf<String, Any>("ID" to videoId, "rating" to rating)
             }
         }
 
         data class Channels(private val properties: Set<Property>): Require {
             enum class Property {
-                snippet,
-                id,
-                contentDetails,
-                statistics,
-                topicDetails
+                SNIPPET,
+                ID,
+                CONTENTDETAILS,
+                STATISTICS,
+                TOPICDETAILS
             }
 
             override val parameter: Map<String, Any> by lazy {
@@ -82,10 +82,10 @@ class YoutubeApiParameter<
 
         data class Playlists(private val properties: Set<Property>): Require {
             enum class Property {
-                snippet,
-                id,
-                contentDetails,
-                player
+                SNIPPET,
+                ID,
+                CONTENTDETAILS,
+                PLAYER
             }
 
             override val parameter: Map<String, Any> by lazy {
@@ -95,8 +95,8 @@ class YoutubeApiParameter<
 
         data class VideoCategory(private val properties: Set<Property>): Require {
             enum class Property {
-                snippet,
-                id
+                SNIPPET,
+                ID
             }
 
             override val parameter: Map<String, Any> by lazy {
@@ -106,9 +106,9 @@ class YoutubeApiParameter<
 
         data class Subscriptions(private val properties: Set<Property>): Require {
             enum class Property {
-                snippet,
-                id,
-                contentDetails
+                SNIPPET,
+                ID,
+                CONTENTDETAILS
             }
 
             override val parameter: Map<String, Any> by lazy {
@@ -143,14 +143,14 @@ class YoutubeApiParameter<
             override val parameter: Map<String, Any> by lazy {
                 when (this) {
                     is Chart -> mapOf("chart" to "mostPopular")
-                    is Id -> mapOf("id" to this.ids.joinToString(separator = ","))
+                    is Id -> mapOf("ID" to this.ids.joinToString(separator = ","))
                     is MyRating -> mapOf("myRating" to this.rating.toString())
                 }
             }
 
             enum class Rating {
-                dislike,
-                like
+                DISLIKE,
+                LIKE
             }
         }
 
@@ -164,7 +164,7 @@ class YoutubeApiParameter<
                 when (this) {
                     is CategoryId -> mapOf("categoryId" to this.id)
                     is ForUsername -> mapOf("forUsername" to this.name)
-                    is Id -> mapOf("id" to this.ids.joinToString(separator = ","))
+                    is Id -> mapOf("ID" to this.ids.joinToString(separator = ","))
                     is Mine -> mapOf("mine" to true)
                 }
             }
@@ -178,7 +178,7 @@ class YoutubeApiParameter<
             override val parameter: Map<String, Any> by lazy {
                 when (this) {
                     is ChannelId -> mapOf("channelid" to this.id)
-                    is Id -> mapOf("id" to this.ids.joinToString(separator = ","))
+                    is Id -> mapOf("ID" to this.ids.joinToString(separator = ","))
                     is Mine -> mapOf("mine" to true)
                 }
             }
@@ -277,7 +277,7 @@ class YoutubeApiParameter<
             enum class Caption(val value: String) {
                 ANY("any"),
                 CLOSEDCAPTION("closedCaption"),
-                NONE("none")
+                NONE("NONE")
             }
 
             enum class Definition(val value: String) {

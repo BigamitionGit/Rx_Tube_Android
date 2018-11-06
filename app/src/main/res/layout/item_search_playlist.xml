@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> viewModel.onClickPlaylist() }"
+        android:onClick="@{() -> playlist.onClickPlaylist() }"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

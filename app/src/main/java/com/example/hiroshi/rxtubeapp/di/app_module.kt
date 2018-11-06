@@ -23,7 +23,7 @@ var appModule = module {
     viewModel { PlayerViewModel(get(), get()) }
     viewModel { SearchConditionViewModel(get(), get()) }
 
-    single { androidApplication() as Application }
+    single { androidApplication() }
     single { androidApplication().baseContext as Context }
     single { androidApplication().resources as Resources }
     single { LayoutInflater.from(get()) }

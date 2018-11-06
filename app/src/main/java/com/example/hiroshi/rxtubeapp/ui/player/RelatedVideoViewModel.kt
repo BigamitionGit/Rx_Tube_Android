@@ -10,7 +10,7 @@ data class RelatedVideoViewModel(val title: String) {
         }
     }
 
-    fun onClickPlaylist() {
+    fun onClickChannel() {
 
     }
 }

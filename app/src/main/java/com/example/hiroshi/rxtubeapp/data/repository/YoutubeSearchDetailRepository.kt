@@ -17,22 +17,22 @@ class YoutubeSearchDetailRepositoryImpl(
 
     override fun fetch(ids: List<Pair<SearchItemId, String>>): Single<SearchItemDetails> {
 
-        val videoIds = ids.filter { it.first.kind == SearchItemId.Kind.video }.map { it.first.id }
+        val videoIds = ids.filter { it.first.kind == SearchItemId.Kind.VIDEO }.map { it.first.id }
         val channelIds = ids.map { it.second }
-        val playlistIds = ids.filter { it.first.kind == SearchItemId.Kind.playlist }.map { it.first.id }
+        val playlistIds = ids.filter { it.first.kind == SearchItemId.Kind.PLAYLIST }.map { it.first.id }
 
         val videoParameter = YoutubeApiParameter(
-                YoutubeApiParameter.Require.Videos(setOf(VideosRequire.snippet, VideosRequire.player, VideosRequire.statistics)),
+                YoutubeApiParameter.Require.Videos(setOf(VideosRequire.SNIPPET, VideosRequire.PLAYER, VideosRequire.STATISTICS)),
                 YoutubeApiParameter.Filter.Videos.Id(videoIds),
                 setOf())
 
         val channelParameter = YoutubeApiParameter(
-                YoutubeApiParameter.Require.Channels(setOf(ChannelsRequire.snippet, ChannelsRequire.contentDetails, ChannelsRequire.statistics)),
+                YoutubeApiParameter.Require.Channels(setOf(ChannelsRequire.SNIPPET, ChannelsRequire.CONTENTDETAILS, ChannelsRequire.STATISTICS)),
                 YoutubeApiParameter.Filter.Channels.Id(channelIds),
                 setOf())
 
         val playlistParameter = YoutubeApiParameter(
-                YoutubeApiParameter.Require.Playlists(setOf(PlaylistsRequire.snippet, PlaylistsRequire.contentDetails, PlaylistsRequire.player)),
+                YoutubeApiParameter.Require.Playlists(setOf(PlaylistsRequire.SNIPPET, PlaylistsRequire.CONTENTDETAILS, PlaylistsRequire.PLAYER)),
                 YoutubeApiParameter.Filter.Playlists.Id(playlistIds),
                 setOf())
 
@@ -47,19 +47,19 @@ class YoutubeSearchDetailRepositoryImpl(
                                     fun toDetails(id: Pair<SearchItemId, String>): SearchItemDetailType? {
 
                                         when (id.first.kind) {
-                                            SearchItemId.Kind.video -> {
-                                                val v = videos.items.first { it.id == id.first.id } ?: return null
-                                                val c = channels.items.first { it.id == id.second } ?: return null
+                                            SearchItemId.Kind.VIDEO -> {
+                                                val v = videos.items.firstOrNull { it.id == id.first.id } ?: return null
+                                                val c = channels.items.firstOrNull { it.id == id.second } ?: return null
                                                 return SearchVideoDetail.create(v, c)
                                             }
-                                            SearchItemId.Kind.channel -> {
-                                                val c = channels.items.first { it.id == id.first.id } ?: return null
+                                            SearchItemId.Kind.CHANNEL -> {
+                                                val c = channels.items.firstOrNull { it.id == id.first.id } ?: return null
                                                 return SearchChannelDetail.create(c)
                                             }
 
-                                            SearchItemId.Kind.playlist -> {
-                                                val p = playlists.items.first { it.id == id.first.id } ?: return null
-                                                val c = channels.items.first { it.id == id.second } ?: return null
+                                            SearchItemId.Kind.PLAYLIST -> {
+                                                val p = playlists.items.firstOrNull { it.id == id.first.id } ?: return null
+                                                val c = channels.items.firstOrNull { it.id == id.second } ?: return null
                                                 return SearchPlaylistDetail.create(p, c)
                                             }
                                         }

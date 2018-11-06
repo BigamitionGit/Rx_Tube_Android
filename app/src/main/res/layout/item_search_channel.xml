@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View" />
         <variable
             name="channel"
             type="com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemViewModel.Channel"
@@ -16,7 +15,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> viewModel.onClickChannel() }"
+        android:onClick="@{() -> channel.onClickChannel() }"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

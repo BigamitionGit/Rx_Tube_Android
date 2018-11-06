@@ -14,7 +14,7 @@ class SearchConditionHistoryTranslator(private val context: Context) {
     fun translate(conditions: List<YoutubeSearchCondition>): List<List<String>> {
         return conditions.map { condition ->
             val query = condition.searchQuery
-            val searchType = condition.searchTypes?.let { types->String
+            val searchType = condition.searchTypes.let { types->String
                 types.mapNotNull {type->String
                     when (type) {
                         YoutubeApiParameter.Option.Search.SearchType.VIDEO -> context.getString(R.string.condition_search_type_video)

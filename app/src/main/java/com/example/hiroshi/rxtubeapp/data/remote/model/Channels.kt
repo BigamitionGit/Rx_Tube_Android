@@ -1,6 +1,7 @@
 package com.example.hiroshi.rxtubeapp.data.remote.model
 
 import se.ansman.kotshi.JsonSerializable
+import java.util.*
 
 @JsonSerializable
 data class Channels(val items: Array<Item>) {
@@ -38,5 +39,20 @@ data class Channels(val items: Array<Item>) {
 
         @JsonSerializable
         data class TopicDetails(val topicIds: Array<String>)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Channels
+
+        if (!Arrays.equals(items, other.items)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return Arrays.hashCode(items)
     }
 }

@@ -29,7 +29,7 @@ class YoutubeVideosRepositoryImpl(
 
     override fun fetchRelatedVideos(videoId: String): Single<List<SearchVideoDetail>> {
         val searchParameter = YoutubeApiParameter(
-                YoutubeApiParameter.Require.Search(setOf(SearchRequire.id, SearchRequire.snippet)),
+                YoutubeApiParameter.Require.Search(setOf(SearchRequire.ID, SearchRequire.SNIPPET)),
                 YoutubeApiParameter.Filter.Search.RelatedToVideoId(videoId),
                 setOf()
         )
@@ -42,12 +42,12 @@ class YoutubeVideosRepositoryImpl(
                     val channelIds = searchItems.items.map { it.snippet.channelId }
 
                     val videoParameter = YoutubeApiParameter(
-                            YoutubeApiParameter.Require.Videos(setOf(VideosRequire.snippet, VideosRequire.player, VideosRequire.statistics)),
+                            YoutubeApiParameter.Require.Videos(setOf(VideosRequire.SNIPPET, VideosRequire.PLAYER, VideosRequire.STATISTICS)),
                             YoutubeApiParameter.Filter.Videos.Id(videoIds),
                             setOf())
 
                     val channelParameter = YoutubeApiParameter(
-                            YoutubeApiParameter.Require.Channels(setOf(ChannelsRequire.snippet, ChannelsRequire.contentDetails, ChannelsRequire.statistics)),
+                            YoutubeApiParameter.Require.Channels(setOf(ChannelsRequire.SNIPPET, ChannelsRequire.CONTENTDETAILS, ChannelsRequire.STATISTICS)),
                             YoutubeApiParameter.Filter.Channels.Id(channelIds),
                             setOf())
 
@@ -58,8 +58,8 @@ class YoutubeVideosRepositoryImpl(
                                     BiFunction { videos: Videos, channels: Channels ->
 
                                         fun toDetail(item: SearchItems.Item): SearchVideoDetail? {
-                                            val video = videos.items.first { it.id == item.id.id } ?: return null
-                                            val channel = channels.items.first { it.id == item.snippet.channelId } ?: return null
+                                            val video = videos.items.firstOrNull { it.id == item.id.id } ?: return null
+                                            val channel = channels.items.firstOrNull { it.id == item.snippet.channelId } ?: return null
                                             return SearchVideoDetail.create(video, channel)
                                         }
 

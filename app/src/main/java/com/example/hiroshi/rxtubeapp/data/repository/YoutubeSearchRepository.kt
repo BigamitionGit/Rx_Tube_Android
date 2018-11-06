@@ -21,7 +21,7 @@ class YoutubeSearchRepositoryImpl(
 
     override fun fetch(options: Set<YoutubeApiParameter.Option.Search>): Single<SearchItems> {
         val searchParameter = YoutubeApiParameter(
-                YoutubeApiParameter.Require.Search(setOf(SearchRequire.id, SearchRequire.snippet)),
+                YoutubeApiParameter.Require.Search(setOf(SearchRequire.ID, SearchRequire.SNIPPET)),
                 null,
                 options)
         return networkInteractor.hasNetworkConnectionCompletable()

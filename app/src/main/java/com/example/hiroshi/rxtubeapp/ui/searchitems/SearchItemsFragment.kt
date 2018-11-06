@@ -30,7 +30,7 @@ class SearchItemsFragment : Fragment() {
         binding.viewModel = viewModel
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        val youtubeSearchCondition = SearchItemsFragmentArgs.fromBundle(arguments).searchCondition as? YoutubeSearchCondition
+        val youtubeSearchCondition = SearchItemsFragmentArgs.fromBundle(arguments).searchCondition
         if (youtubeSearchCondition != null) {
             viewModel.search(youtubeSearchCondition)
         } else {

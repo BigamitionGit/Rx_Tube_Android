@@ -32,10 +32,9 @@ data class SearchItems(
 @JsonSerializable
 data class SearchItemId(val id: String, val kind: Kind) {
 
-    @JsonSerializable
     enum class Kind(val value: String) {
-        video("video"),
-        channel("channel"),
-        playlist("playlist")
+        VIDEO("video"),
+        CHANNEL("channel"),
+        PLAYLIST("playlist")
     }
 }
