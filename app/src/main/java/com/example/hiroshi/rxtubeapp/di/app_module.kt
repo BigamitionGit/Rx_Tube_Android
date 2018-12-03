@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.view.LayoutInflater
+import com.example.hiroshi.rxtubeapp.MainViewModel
+import com.example.hiroshi.rxtubeapp.ui.channeldetail.ChannelDetailViewModel
 import com.example.hiroshi.rxtubeapp.ui.player.PlayerViewModel
 import com.example.hiroshi.rxtubeapp.ui.searchcondition.SearchConditionViewModel
 import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsViewModel
@@ -18,10 +20,14 @@ import org.koin.dsl.module.module
 
 var appModule = module {
 
-    // ViewModel for SearchItemsFragment
+    // ViewModel for Activity
+    viewModel { MainViewModel() }
+
+    // ViewModel for Fragment
     viewModel { SearchItemsViewModel(get(), get(), get(), get()) }
     viewModel { PlayerViewModel(get(), get()) }
     viewModel { SearchConditionViewModel(get(), get()) }
+    viewModel { ChannelDetailViewModel() }
 
     single { androidApplication() }
     single { androidApplication().baseContext as Context }

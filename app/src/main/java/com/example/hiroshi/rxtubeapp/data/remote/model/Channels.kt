@@ -1,44 +1,53 @@
 package com.example.hiroshi.rxtubeapp.data.remote.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import se.ansman.kotshi.JsonSerializable
 import java.util.*
 
 @JsonSerializable
-data class Channels(val items: Array<Item>) {
+@Parcelize
+data class Channels(val items: Array<Item>): Parcelable {
 
     @JsonSerializable
+    @Parcelize
     data class Item(val id: String,
                     val snippet: Snippet?,
                     val contentDetails: ContentDetails?,
                     val statistics: Statistics?,
-                    val topicDetails: TopicDetails?) {
+                    val topicDetails: TopicDetails?): Parcelable {
 
         @JsonSerializable
+        @Parcelize
         data class Snippet(val title: String,
                            val description: String,
                            val publishedAt: String,
-                           val thumbnails: Thumbnails)
+                           val thumbnails: Thumbnails): Parcelable
 
         @JsonSerializable
-        data class ContentDetails(val relatedPlaylists: Array<RelatedPlaylists>) {
+        @Parcelize
+        data class ContentDetails(val relatedPlaylists: Array<RelatedPlaylists>): Parcelable {
 
             @JsonSerializable
+            @Parcelize
             data class RelatedPlaylists(val likes: String,
                                         val favorites: String,
                                         val uploads: String,
                                         val watchHistory: String,
-                                        val watchLater: String)
+                                        val watchLater: String): Parcelable
         }
 
         @JsonSerializable
+        @Parcelize
         data class Statistics(val viewCount: Int,
                               val commentCount: Int,
                               val subscriberCount: Int,
                               val hiddenSubscriberCount: Int,
-                              val videoCount: Int)
+                              val videoCount: Int): Parcelable
 
         @JsonSerializable
-        data class TopicDetails(val topicIds: Array<String>)
+        @Parcelize
+        data class TopicDetails(val topicIds: Array<String>): Parcelable
     }
 
     override fun equals(other: Any?): Boolean {

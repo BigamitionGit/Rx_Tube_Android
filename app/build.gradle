@@ -65,6 +65,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     //noinspection GradleCompatible
     implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation "androidx.concurrent:concurrent-futures:1.0.0-alpha02"
+    implementation "androidx.fragment:fragment:1.0.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.0.0-rc01'
@@ -97,7 +99,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime:$arch_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$arch_version"
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$arch_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$arch_version"
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$arch_version"
 }

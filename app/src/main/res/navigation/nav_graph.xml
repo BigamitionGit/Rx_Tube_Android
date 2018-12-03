@@ -6,16 +6,12 @@
     app:startDestination="@id/navigation_home">
 
     <fragment
-        android:id="@+id/playerFragment"
-        android:name="com.example.hiroshi.rxtubeapp.ui.player.PlayerFragment"
-        android:label="PlayerFragment" />
-    <fragment
-        android:id="@+id/searchItemsFragment"
+        android:id="@+id/navigation_searchItems"
         android:name="com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsFragment"
         android:label="SearchItemsFragment" >
         <action
-            android:id="@+id/showPlayer"
-            app:destination="@id/playerFragment" />
+            android:id="@+id/showChannel"
+            app:destination="@id/navigation_channelDetail" />
         <argument
             android:name="searchCondition"
             android:defaultValue="@null"
@@ -28,7 +24,7 @@
         android:label="SearchConditionFragment" >
         <action
             android:id="@+id/showSearchItems"
-            app:destination="@id/searchItemsFragment" />
+            app:destination="@id/navigation_searchItems" />
 
     </fragment>
     <fragment
@@ -36,7 +32,17 @@
         android:name="com.example.hiroshi.rxtubeapp.ui.home.HomeFragment"
         android:label="HomeFragment" >
         <action
-            android:id="@+id/showPlayer"
-            app:destination="@id/playerFragment" />
+            android:id="@+id/showChannel"
+            app:destination="@id/navigation_channelDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_channelDetail"
+        android:name="com.example.hiroshi.rxtubeapp.ui.channeldetail.ChannelDetailFragment"
+        android:label="ChannelDetailFragment" >
+        <argument
+            android:name="channelDetail"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.hiroshi.rxtubeapp.data.remote.model.SearchChannelDetail"/>
     </fragment>
 </navigation>

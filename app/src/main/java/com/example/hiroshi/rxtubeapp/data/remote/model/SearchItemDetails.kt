@@ -1,5 +1,7 @@
 package com.example.hiroshi.rxtubeapp.data.remote.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.nio.channels.Channel
 
 data class SearchItemDetails(val items: List<SearchItemDetailType>) {
@@ -43,12 +45,12 @@ data class SearchVideoDetail(val id: String,
         }
     }
 }
-
+@Parcelize
 data class SearchChannelDetail(val id: String,
                                val snippet: Channels.Item.Snippet,
                                val contentDetails: Channels.Item.ContentDetails,
                                val statistics: Channels.Item.Statistics,
-                               val topicDetails: Channels.Item.TopicDetails): SearchItemDetailType() {
+                               val topicDetails: Channels.Item.TopicDetails): SearchItemDetailType(), Parcelable {
 
     companion object Factory {
         fun create(channel: Channels.Item): SearchChannelDetail? {

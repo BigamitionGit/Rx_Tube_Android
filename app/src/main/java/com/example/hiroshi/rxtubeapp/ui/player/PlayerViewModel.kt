@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.hiroshi.rxtubeapp.data.remote.model.SearchChannelDetail
 import com.example.hiroshi.rxtubeapp.data.remote.model.SearchVideoDetail
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeRelatedVideosRepository
 import com.example.hiroshi.rxtubeapp.data.repository.YoutubeVideosRateRepository
@@ -11,6 +12,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+
+
 
 class PlayerViewModel(
         private val relatedVideosRepository: YoutubeRelatedVideosRepository,
@@ -29,6 +32,9 @@ class PlayerViewModel(
 
     private val mutablePlay: MutableLiveData<String> = MutableLiveData()
     val play: LiveData<String> = mutablePlay
+
+    private val mutableShowChannelDetail: MutableLiveData<SearchChannelDetail> = MutableLiveData()
+    val showChannelDetail: LiveData<SearchChannelDetail> = mutableShowChannelDetail
 
 
     // Input

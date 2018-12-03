@@ -9,12 +9,28 @@ import androidx.annotation.MenuRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.hiroshi.rxtubeapp.databinding.ActivityMainBinding
+import com.example.hiroshi.rxtubeapp.ui.channeldetail.ChannelDetailFragment
+import com.example.hiroshi.rxtubeapp.ui.channeldetail.ChannelDetailViewModel
+import com.example.hiroshi.rxtubeapp.ui.home.HomeFragmentDirections
+import com.example.hiroshi.rxtubeapp.ui.player.PlayerViewModel
+import com.example.hiroshi.rxtubeapp.ui.searchcondition.SearchConditionViewModel
+import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsFragmentDirections
+import com.example.hiroshi.rxtubeapp.ui.searchitems.SearchItemsViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val mainViewModel: MainViewModel by viewModel()
+    private val searchItemsViewModel: SearchItemsViewModel by viewModel()
+    private val searchConditionViewModel: SearchConditionViewModel by viewModel()
+    private val channelDetailViewModel: ChannelDetailViewModel by viewModel()
+    private val playerViewModel: PlayerViewModel by viewModel()
 
     private val navController: NavController by lazy { findNavController(this, R.id.nav_host_fragment) }
 
@@ -26,9 +42,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        lifecycle.addObserver(mainViewModel)
+
         NavigationUI.setupActionBarWithNavController(this, navController)
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
         setupBottomNavigation(savedInstanceState)
+
+        playerViewModel.showChannelDetail.observe(this, Observer { channel ->
+            navController.currentDestination?.let { destination ->
+                if (destination.id == R.id.navigation_searchItems) {
+                    // transition
+                    navController.navigate(SearchItemsFragmentDirections.showChannel().setChannelDetail(channel))
+                } else if (destination.id == R.id.navigation_home) {
+                    // transition
+                    navController.navigate(HomeFragmentDirections.showChannel().setChannelDetail(channel))
+                } else if (destination.id == R.id.navigation_channelDetail) {
+                    // update channel detail
+                    channelDetailViewModel.channelDidTap(channel)
+                }
+            }
+
+
+        })
+
+
+
+
     }
 
     private fun setupBottomNavigation(savedInstanceState: Bundle?) {
